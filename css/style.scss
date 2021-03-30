@@ -10,22 +10,30 @@ html {
 .wrapper{
     padding: 30px;
 }
+.details {
+  display: none;
+
+  &:checked ~ .content{
+    transform: rotateY(180deg);
+  }
+}
 .card{
+  margin-left: 15px;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 60px;
+}
+.card, .card > .content{
       width: 400px;
       height: 300px;
       display: inline-block;
-      background-color: rgba(255, 255, 255, 0);
-      border-radius: 60px;
-      box-shadow: rgba(0, 0, 0, 0.15) 0 0 40px;
-      margin-left: 15px;
-
+      position: relative;
       &:hover{
         .front{
           .background > img{
             filter: blur(0px);
             transition: filter 0.3s ease-in-out;
           }
-          .content{
+          .info{
             text-shadow: rgba(0, 0, 0, 0.5) 0 0 50px;
             transition: text-shadow 0.3s ease-in-out;
             .button{
@@ -34,20 +42,66 @@ html {
             }
         }
       }
-      .details {
-        display: none;
-      
-        &:checked ~ .content {
-          transform: rotateY(180deg);
+      .back{
+        .button{
+          box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+          transition: box-shadow 0.3s ease-in-out;
         }
       }
-      .front{
+    }
+
+    .content {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+      .front,.back{
         width: 100%;
         height: 100%;
         background-color: inherit;
         border-radius: 60px;
         color: white;
         position: relative;
+        backface-visibility: hidden;
+        transform-style: preserve-3d;
+        position: absolute;
+        box-shadow: rgba(0, 0, 0, 0.15) 0 0 40px;
+        .info{
+          text-align: center;
+          .button{
+            grid-row: -1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 400;
+            cursor: pointer;
+            display: inline;
+            padding: 0.4em 0.5em;
+            height: 2em;
+            line-height: 2em;
+            width: 2em;
+            border-radius: 5px;
+            left: 50%;
+            backface-visibility: hidden;
+            transition: box-shadow 0.3s ease-in-out;
+
+            &.return {
+              line-height: 3em;
+              color: black;
+              text-shadow: none;
+              &:hover {
+                background-color: #fff;
+                box-shadow: none;
+              }
+            }
+          }
+        }
+      }
+
+
+
+      .front{
+        transform: rotateY(0deg);
         .background {
           overflow: hidden;
           border-radius: 60px;
@@ -62,8 +116,7 @@ html {
           transition: filter 0.3s ease-in-out;
           }
         }
-        .content{
-          text-align: center;
+        .info{
           transform: translateY(80%);
           transition: text-shadow 0.3s ease-in-out;
           .card-front-title{
@@ -72,40 +125,63 @@ html {
             margin: 0;
           }
           .button {
-            grid-row: -1;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 400;
-            cursor: pointer;
-            display: inline;
-            padding: 0.4em 0.5em;
-            height: 2em;
-            line-height: 2em;
-            width: 2em;
             background-color: transparent;
             border: solid 2px #fff;
             color: #fff;
-            border-radius: 5px;
-            left: 50%;
-            backface-visibility: hidden;
-            transition: box-shadow 0.3s ease-in-out;
             &:hover {
               background-color: #fff;
               color: black;
             }
           
             &.return {
-              line-height: 3em;
-              color: black;
               border-color: #fff;
-              text-shadow: none;
               &:hover {
-                background-color: #fff;
                 color: #fff;
-                box-shadow: none;
               }
             }
           }
         }
       }
-  }
+
+
+      .back {
+        transform: rotateY(180deg);
+        z-index: 1;
+        .info{
+          z-index: -1;
+          transform: translateY(40%);
+          .text{
+            grid-row: 5;
+            grid-column: 1/-1;
+            font-size: 0.86em;
+            border-radius: 5px;
+            font-weight: 600;
+            line-height: 1.4em;
+            overflow: auto;
+            color: rgb(59, 59, 59);
+            padding-right: 10px;
+            margin-bottom: 10px;
+          }
+          .button {
+            background-color: white;
+            border: solid 2px black;
+            color: black;
+            
+            &:hover {
+              background-color: black;
+              color: white;
+            }
+            &.return {
+              border-color: black;
+              &:hover {
+                color: black;
+              }
+            }
+          }
+        }
+      }
+    }
+      
+      
+
+}
